@@ -99,15 +99,12 @@ def iot_setup(pwd):
     }
 
     # Shadow operations
-    myDeviceShadow.shadowGet(customShadowCallback, 5)
+    #myDeviceShadow.shadowGet(customShadowCallback, 5)
 
     myJSONPayload['state']['reported']['time'] = f'{datetime.now()}'
     myDeviceShadow.shadowUpdate(json.dumps(myJSONPayload), customShadowCallback_Update, 5)
-    
-    sleep(5)
 
-    myDeviceShadow.shadowGet(customShadowCallback, 5)
-
+    #myDeviceShadow.shadowGet(customShadowCallback, 5)
     #myDeviceShadow.shadowDelete(customShadowCallback_Delete, 5)
     #myDeviceShadow.shadowRegisterDeltaCallback(customShadowCallback_Delta)
     #myDeviceShadow.shadowUnregisterDeltaCallback()
