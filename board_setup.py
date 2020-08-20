@@ -3,13 +3,13 @@ from time import sleep, time
 
 
 def setup():
-    board_led = LED(17)
+    board = LED(17)
     push_btn = Button(2)
     sensor = LightSensor(18)
 
-    board_led.on()
+    board.on()
 
-    parts = (board_led, push_btn, sensor)
+    parts = (board, push_btn, sensor)
 
     return parts
 
