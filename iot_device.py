@@ -24,7 +24,7 @@ def event_status(client, payload, shadow, report, sensor, event_type=""):
 
     global counter
 
-    led_switch_state = 'on' if round(sensor.value) == 1 else 'off'
+    led_switch_state = 'on' if get_switch_state(sensor) == 1 else 'off'
     time = f'{datetime.now()}'
 
     payload['time'] = time
@@ -47,6 +47,12 @@ def format_shadow_report(report):
     return json.dumps(tmp)
 
 
+def get_switch_state(sensor):
+    # Button == 0 if pressed
+    # Switch == 0 if 'off'
+
+    return not sensor.value
+
 def run_tgsn():
 
     myDevice = iot_setup()
@@ -61,7 +67,7 @@ def run_tgsn():
     schedule.every(10).seconds.do(event_status, devClient, devPayload, devShadow, shadow_report, sensor, 'ping')
 
     # Initialize Sensor State
-    led_switch_state = round(sensor.value)
+    led_switch_state = get_switch_state(sensor)
 
     shadow_report['LED_switch'] = 'on' if led_switch_state == 1 else 'off'
     shadow_report['LED_main'] = 'on'
@@ -85,12 +91,12 @@ def run_tgsn():
             led_main.on()
 
         # Toggle LED Event
-        if round(sensor.value) != led_switch_state:
+        if get_switch_state(sensor) != led_switch_state:
             print('toggled!')
 
             devPayload['mssg'] = 'LED toggled'
             shadow_report['last_event'] = 'LED toggled'
-            led_switch_state = round(sensor.value)
+            led_switch_state = get_switch_state(sensor)
         
             # Switch LED main
             if led_switch_state == 1:
