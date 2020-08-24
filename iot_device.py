@@ -26,26 +26,16 @@ def customShadowCallback_Update(payload, responseStatus, token):
         print("Update request " + token + " rejected!")
 '''
 
-def ping_status(client, payload, shadow, report, sensor):
+def ping_status():
     global counter
-
     counter += 1
 
-    led_switch_state = 'on' if round(sensor.value) == 1 else 'off'
-    time = f'{datetime.now()}'
 
-    payload['time'] = time
-    payload['ping'] = counter
-    payload['LED_switch'] = led_switch_state
-    client.publish('myTopic', json.dumps(payload), 0)
+def event_status(client, payload, shadow, report, event_type, sensor):
+    if event_type == 'ping':
+        ping_status()
+        payload['mssg'] = 'pinging'
 
-    report['time'] = time
-    report['property'] = counter
-    report['LED_switch'] = led_switch_state
-    shadow.shadowUpdate(format_shadow_report(report), customShadowCallback_Update, 5)
-
-
-def event_status(client, payload, shadow, report, sensor):
     global counter
 
     led_switch_state = 'on' if round(sensor.value) == 1 else 'off'
@@ -82,7 +72,7 @@ def run_tgsn():
     shadow_report = {'property': counter, 'state': 'pinging'}
 
     # Schedule Reporting Service(s)
-    schedule.every(10).seconds.do(ping_status, devClient, devPayload, devShadow, shadow_report, sensor)
+    schedule.every(10).seconds.do(event_status, devClient, devPayload, devShadow, shadow_report, 'ping', sensor)
 
     # Initialize Sensor State
     led_switch_state = round(sensor.value)
