@@ -6,7 +6,7 @@ from time import sleep, time
 import schedule
 
 from iot_controller import *
-#from board_setup import *
+from board_setup import *
 
 
 counter = 0
@@ -41,7 +41,7 @@ def ping_status(client, payload, shadow, report, sensor):
     report['time'] = time
     report['property'] = counter
     report['LED_switch'] = 'on' if round(sensor.value) == 1 else 'off'
-    shadow_update(shadow, report, 'update')
+    shadow.shadowUpdate(json.dumps(report), customShadowCallback_Update, 5)
 
 
 def event_status(client, payload, shadow, report, sensor):
