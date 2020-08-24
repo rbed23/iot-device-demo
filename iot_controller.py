@@ -72,7 +72,7 @@ def delta_handler(delta_state):
     for k, v in delta_state.items():
         if k == 'LED_main':
             if v == 'on' or v == 'off':
-                led_main(v)
+                led_main_handler(v)
                 aar['LED_main'] = v
             else:
                 print('Invalid input value for LED_main; try "on" or "off"')
