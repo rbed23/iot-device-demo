@@ -86,7 +86,7 @@ def run_tgsn():
 
     shadow_report['LED_switch'] = 'on' if led_switch_state == 1 else 'off'
     shadow_report['LED_main'] = 'on'
-    shadow.shadowUpdate(json.dumps(shadow_report), customShadowCallback_Update, 5)
+    devShadow.shadowUpdate(json.dumps(shadow_report), customShadowCallback_Update, 5)
 
     while True:
 
