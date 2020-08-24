@@ -36,7 +36,7 @@ def ping_status(client, payload, shadow, report, sensor):
     payload['time'] = time
     payload['ping'] = counter
     payload['LED_switch'] = 'on' if round(sensor.value) == 1 else 'off'
-    publish_data(client, json.dumps(payload), 'myTopic')
+    client.publish('myTopic', json.dumps(payload), 0)
 
     report['time'] = time
     report['property'] = counter
