@@ -53,7 +53,7 @@ def customShadowCallback_Delta(payload, responseStatus, token):
     print("version: " + str(payloadDict["version"]))
     print("+++++++++++++++++++++++\n\n")
 
-    delta_handler(payloadDict['state']['desired'])
+    delta_handler(payloadDict['state'])
 
 
 def customShadowCallback_Delete(payload, responseStatus, token):
