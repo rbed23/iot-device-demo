@@ -6,6 +6,9 @@ import os
 from time import sleep
 
 
+from board_setup import *
+
+
 def customMssgCallback(client, userdata, message):
     print("Received a new message:")
     print(str(message.payload))
@@ -65,7 +68,6 @@ def customShadowCallback_Delete(payload, responseStatus, token):
 
 
 def delta_handler(delta_state):
-    from board_setup import *
 
     print('in delta handler')
     aar = {}
