@@ -49,7 +49,7 @@ def customShadowCallback_Delta(payload, responseStatus, token):
     payloadDict = json.loads(payload)
     print("++++++++DELTA++++++++++")
     print(json.dumps(payloadDict, indent=2))
-    print("Desired state: " + str(payloadDict["state"]["desired"]))
+    print("Desired state: " + str(payloadDict["state"]))
     print("version: " + str(payloadDict["version"]))
     print("+++++++++++++++++++++++\n\n")
 
