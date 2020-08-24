@@ -2,16 +2,11 @@ from gpiozero import LED, Button, LightSensor
 from time import sleep, time
 
 
-def setup():
-    board = LED(17)
-    push_btn = Button(2)
-    sensor = LightSensor(18)
+board = LED(17)
+led_main = LED(18)
+button = Button(2)
+sensor = LightSensor(27)
 
-    board.on()
 
-    parts = (board, push_btn, sensor)
-
-    return parts
-
-if __name__ == '__main__':
-    setup()
+board.on()
+led_main.on()

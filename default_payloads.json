@@ -1,0 +1,19 @@
+{
+    "default_shadow": {
+        "state": {
+            "reported":{
+                "LED_main": "",
+                "LED_switch": "",
+                "property": "",
+                "state": "",
+                "time": ""
+            }
+        }
+    },
+    "default_payload": {
+        "mssg": "",
+        "ping": "",
+        "time": "",
+        "uid": ""
+    }
+}
