@@ -6,7 +6,7 @@ import os
 from time import sleep
 
 from delta_manager import *
-from iot_device import devShadow
+
 
 def customMssgCallback(client, userdata, message):
     print("Received a new message:")
