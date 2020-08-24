@@ -5,9 +5,7 @@ import json
 import os
 from time import sleep
 
-
-from board_setup import *
-
+from delta_manager import *
 
 def customMssgCallback(client, userdata, message):
     print("Received a new message:")
