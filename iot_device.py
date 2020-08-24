@@ -105,7 +105,7 @@ def run_tgsn():
 
             event_status(devClient, devPayload, devShadow, shadow_report, sensor)
 
-            sleep(0.1)
+            sleep(0.5)
             board.on()
 
         # Toggle LED Event
