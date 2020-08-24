@@ -2,6 +2,7 @@
     "default_shadow": {
         "state": {
             "reported":{
+                "last_event": "",
                 "LED_main": "",
                 "LED_switch": "",
                 "property": "",
