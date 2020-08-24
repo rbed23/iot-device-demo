@@ -153,7 +153,7 @@ def iot_setup():
         json.dumps(shadow_doc),
         customShadowCallback_Update, 5)
     #myDeviceShadow.shadowDelete(customShadowCallback_Delete, 5)
-    #myDeviceShadow.shadowRegisterDeltaCallback(customShadowCallback_Delta)
+    myDeviceShadow.shadowRegisterDeltaCallback(customShadowCallback_Delta)
     #myDeviceShadow.shadowUnregisterDeltaCallback()
 
     print('shadow handler configured')
