@@ -1,6 +1,6 @@
 from board_setup import *
 
-led_main_handler(action):
+def led_main_handler(action):
     if action == 'on':
         led_main.on()
     elif action == 'off'
