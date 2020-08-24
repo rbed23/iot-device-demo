@@ -37,6 +37,7 @@ def customShadowCallback_Update(payload, responseStatus, token):
         print("~~~~~~~~~~~~~~~~~~~~~~~\n\n")
     if responseStatus == "rejected":
         print("Update request " + token + " rejected!")
+        print(json.dumps(payload, indent=2))
 
 
 def customShadowCallback_Delta(payload, responseStatus, token):
