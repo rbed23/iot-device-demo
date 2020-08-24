@@ -68,8 +68,7 @@ def format_shadow_report(report):
             'reported': report
         }
     }
-    print(tmp)
-    return tmp
+    return json.dumps(tmp)
 
 
 def run_tgsn():
