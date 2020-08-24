@@ -121,7 +121,7 @@ def run_tgsn():
 
             else:
                 led_main.off
-                shadow_report['LED_main'] = 'of'
+                shadow_report['LED_main'] = 'off'
 
             event_status(devClient, devPayload, devShadow, shadow_report, sensor)
 
