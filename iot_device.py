@@ -11,20 +11,6 @@ from board_setup import *
 
 counter = 0
 
-'''
-def customShadowCallback_Update(payload, responseStatus, token):
-    # payload is a JSON string ready to be parsed using json.loads(...)
-    if responseStatus == "timeout":
-        print("Update request " + token + " time out!")
-    if responseStatus == "accepted":
-        payloadDict = json.loads(payload)
-        print("~~~~~~~~~~~~~~~~~~~~~~~")
-        print("Update request with token: " + token + " accepted!")
-        print("property: " + str(payloadDict["state"]["reported"]["property"]))
-        print("~~~~~~~~~~~~~~~~~~~~~~~\n\n")
-    if responseStatus == "rejected":
-        print("Update request " + token + " rejected!")
-'''
 
 def ping_status():
     global counter
