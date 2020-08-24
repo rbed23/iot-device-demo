@@ -31,31 +31,34 @@ def ping_status(client, payload, shadow, report, sensor):
 
     counter += 1
 
+    led_switch_state = 'on' if round(sensor.value) == 1 else 'off'
     time = f'{datetime.now()}'
-    payload['mssg'] = 'ping'
+
     payload['time'] = time
     payload['ping'] = counter
-    payload['LED_switch'] = 'on' if round(sensor.value) == 1 else 'off'
+    payload['LED_switch'] = led_switch_state
     client.publish('myTopic', json.dumps(payload), 0)
 
     report['time'] = time
     report['property'] = counter
-    report['LED_switch'] = 'on' if round(sensor.value) == 1 else 'off'
+    report['LED_switch'] = led_switch_state
     shadow.shadowUpdate(json.dumps(report), customShadowCallback_Update, 5)
 
 
 def event_status(client, payload, shadow, report, sensor):
     global counter
 
+    led_switch_state = 'on' if round(sensor.value) == 1 else 'off'
     time = f'{datetime.now()}'
+
     payload['time'] = time
     payload['ping'] = counter
-    payload['LED_switch'] = 'on' if round(sensor.value) == 1 else 'off'
+    payload['LED_switch'] = led_switch_state
     client.publish('myTopic', json.dumps(payload), 0)
 
     report['time'] = time
     report['property'] = counter
-    report['LED_switch'] = 'on' if round(sensor.value) == 1 else 'off'
+    report['LED_switch'] = led_switch_state
     shadow.shadowUpdate(json.dumps(report), customShadowCallback_Update, 5)
 
 
