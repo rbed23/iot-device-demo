@@ -97,11 +97,10 @@ def run_tgsn():
         if button.is_pressed:
             board.off()
 
-            devPayload['LED_switch'] = 'on' if round(sensor.value) == 1 else 'off'
-            devPayload['time'] = f'{datetime.now()}'
             devPayload['mssg'] = 'button pressed'
+            shadow_report['last_event'] = 'button pressed'
 
-            devClient.publish('myTopic', devPayload, 0)
+            event_status(devClient, devPayload, devShadow, shadow_report, sensor)
 
             sleep(0.1)
             board.on()
