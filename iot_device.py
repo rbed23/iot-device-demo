@@ -51,7 +51,10 @@ def get_switch_state(sensor):
     # Button == 0 if pressed
     # Switch == 0 if 'off'
 
+    # Return True if powered
+    # else return False
     return not sensor.value
+
 
 def run_tgsn():
 

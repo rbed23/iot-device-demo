@@ -65,10 +65,9 @@ def customShadowCallback_Delete(payload, responseStatus, token):
 
 
 def delta_handler(delta_state):
-    from board_setup.setup import parts
+    from board_setup import *
 
-    led_main = parts[1]
-
+    print('in delta handler')
     aar = {}
     for k, v in delta_state.items():
         if k == 'LED_main':
