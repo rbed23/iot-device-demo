@@ -31,7 +31,7 @@ def ping_status():
     counter += 1
 
 
-def event_status(client, payload, shadow, report, event_type, sensor):
+def event_status(client, payload, shadow, report, sensor, event_type=""):
     if event_type == 'ping':
         ping_status()
         payload['mssg'] = 'pinging'
@@ -72,7 +72,7 @@ def run_tgsn():
     shadow_report = {'property': counter, 'state': 'pinging'}
 
     # Schedule Reporting Service(s)
-    schedule.every(10).seconds.do(event_status, devClient, devPayload, devShadow, shadow_report, 'ping', sensor)
+    schedule.every(10).seconds.do(event_status, devClient, devPayload, devShadow, shadow_report, sensor, 'ping')
 
     # Initialize Sensor State
     led_switch_state = round(sensor.value)
