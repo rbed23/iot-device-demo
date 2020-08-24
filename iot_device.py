@@ -42,7 +42,7 @@ def ping_status(client, payload, shadow, report, sensor):
     report['time'] = time
     report['property'] = counter
     report['LED_switch'] = led_switch_state
-    shadow.shadowUpdate(report, customShadowCallback_Update, 5)
+    shadow.shadowUpdate(format_shadow_report(report), customShadowCallback_Update, 5)
 
 
 def event_status(client, payload, shadow, report, sensor):
@@ -59,7 +59,7 @@ def event_status(client, payload, shadow, report, sensor):
     report['time'] = time
     report['property'] = counter
     report['LED_switch'] = led_switch_state
-    shadow.shadowUpdate(report, customShadowCallback_Update, 5)
+    shadow.shadowUpdate(format_shadow_report(report), customShadowCallback_Update, 5)
 
 
 def format_shadow_report(report):
