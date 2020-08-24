@@ -115,19 +115,12 @@ def run_tgsn():
             event_status(devClient, devPayload, devShadow, shadow_report, sensor)
             led_switch_state = round(sensor.value)
 
-        # Switch LED main
-        if led_switch_state:
-            led_main.on()
-            shadow_report['LED_main'] = 'on'
-            devShadow.shadowUpdate(
-                format_shadow_report(shadow_report),
-                customShadowCallback_Update, 5)
-        else:
-            led_main.off()
-            shadow_report['LED_main'] = 'off'
-            devShadow.shadowUpdate(
-                format_shadow_report(shadow_report),
-                customShadowCallback_Update, 5)
+            # Switch LED main
+            if led_switch_state == 1:
+                led_main.on()
+            else:
+                led_main.off()
+
 
         # Sleep
         sleep(0.1)
