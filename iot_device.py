@@ -114,7 +114,7 @@ def run_tgsn():
     while True:
 
         # Run Scheduler(s)
-        schedule.run_pending()
+        #schedule.run_pending()
 
         # Button Press Event
         if button.is_pressed:
