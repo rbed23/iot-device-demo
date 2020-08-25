@@ -6,6 +6,7 @@ import os
 from time import sleep
 
 from delta_manager import *
+from iot_device.run_tgsn import *
 
 
 def customMssgCallback(client, userdata, message):
@@ -81,11 +82,9 @@ def delta_handler(delta_state):
     
     final_report = {'state': {'reported': aar}}
 
-    '''
     myDeviceShadow.shadowUpdate(
         json.dumps(final_report),
         customShadowCallback_Update, 5)
-    '''
 
 
 def iot_setup():
