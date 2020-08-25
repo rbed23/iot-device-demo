@@ -88,10 +88,10 @@ def run_tgsn():
             devPayload['mssg'] = 'button pressed'
             shadow_report['last_event'] = 'button pressed'
             shadow_report['LED_main'] = 'off'
-
             event_status(devClient, devPayload, devShadow, shadow_report, sensor)
 
             sleep(0.5)
+
             led_main.on()
             shadow_report['LED_main'] = 'on'
             event_status(devClient, devPayload, devShadow, shadow_report, sensor)
