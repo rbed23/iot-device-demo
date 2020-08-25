@@ -1,9 +1,9 @@
+import schedule
+
 from datetime import datetime
 import json
-import threading
-from time import sleep, time
-
-import schedule
+from threading import Thread
+from time import sleep
 
 from iot_controller import *
 from board_setup import *
@@ -103,7 +103,13 @@ def run_tgsn():
     shadow_report = {'property': counter, 'state': 'pinging'}
 
     # Schedule Reporting Service(s)
-    schedule.every(10).seconds.do(event_status, devClient, devPayload, devShadow, shadow_report, sensor, 'ping')
+    schedule.every(10).seconds.do(
+        event_status,
+        devClient,
+        devPayload,
+        devShadow,
+        shadow_report,
+        sensor,'ping')
 
     # Initialize Sensor State
     led_switch_state = get_switch_state(sensor)
@@ -116,24 +122,27 @@ def run_tgsn():
     while True:
 
         # Run Scheduler(s)
-        #schedule.run_pending()
+        schedule.run_pending()
 
         # Button Press Event
         if button.is_pressed:
-            btn_thread = threading.Thread(
+
+            # Create Thread
+            btn_thread = Thread(
                 target=event,
                 args=(devPayload, shadow_report, devClient, devShadow, 'button_press'))
             btn_thread.start()
-            sleep(0.1)
             
         # Toggle LED Event
         if get_switch_state(sensor) != led_switch_state:
-            tgl_thread = threading.Thread(
+            
+            # Set New Switch State
+            led_switch_state = get_switch_state(sensor)
+
+            # Create Event Thread
+            tgl_thread = Thread(
                 target=event,
                 args=(devPayload, shadow_report, devClient, devShadow, 'toggle'))
-            
-            led_switch_state = get_switch_state(sensor)
-            
             tgl_thread.start()
         
         # Sleep
