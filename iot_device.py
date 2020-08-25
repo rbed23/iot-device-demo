@@ -53,8 +53,8 @@ def get_switch_state(sensor):
 
     # Return True if powered
     # else return False
-    return not sensor.value
-
+    #return not sensor.value
+    return round(sensor.value)
 
 def run_tgsn():
 
@@ -87,6 +87,7 @@ def run_tgsn():
 
             devPayload['mssg'] = 'button pressed'
             shadow_report['last_event'] = 'button pressed'
+            shadow_report['LED_main'] = 'off'
 
             event_status(devClient, devPayload, devShadow, shadow_report, sensor)
 
@@ -113,6 +114,7 @@ def run_tgsn():
             event_status(devClient, devPayload, devShadow, shadow_report, sensor)
 
         
+        #print(sensor.value)
         # Sleep
         sleep(0.1)
 

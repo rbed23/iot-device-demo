@@ -82,7 +82,6 @@ def delta_handler(delta_state):
     final_report = {'state': {'reported': aar}}
     print(json.dumps(final_report, indent=2))
 
-    from iot_setup import myDeviceShadow
     myDeviceShadow.shadowUpdate(
         json.dumps(final_report),
         customShadowCallback_Update, 5)
