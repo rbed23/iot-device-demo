@@ -57,39 +57,37 @@ def get_switch_state(sensor):
     return round(sensor.value)
 
 
-def button_press_event(payload, shadow):
-    print('button pressed!')
-    led_main.off()
+def event(payload, shadow, client, dev, event_type):
+    if event_type == 'button_press':
+        print('button pressed!')
 
-    payload['mssg'] = 'button pressed'
-    shadow['last_event'] = 'button pressed'
-    shadow['LED_main'] = 'off'
-    event_status(devClient, payload, devShadow, shadow, sensor)
+        led_main.off()
 
-    sleep(0.5)
+        payload['mssg'] = 'button pressed'
+        shadow['last_event'] = 'button pressed'
+        shadow['LED_main'] = 'off'
+        event_status(client, payload, dev, shadow, sensor)
 
-    led_main.on()
-    shadow['LED_main'] = 'on'
-    event_status(devClient, payload, devShadow, shadow, sensor)
+        sleep(0.5)
 
-
-def toggle_event(payload, shadow):
-    print('toggled!')
-
-    payload['mssg'] = 'LED toggled'
-    shadow['last_event'] = 'LED toggled'
-    led_switch_state = get_switch_state(sensor)
-
-    # Switch LED main
-    if led_switch_state == 1:
         led_main.on()
         shadow['LED_main'] = 'on'
 
-    else:
-        led_main.off()
-        shadow['LED_main'] = 'off'
+    elif event_type == 'toggle':
+        print('toggled!')
 
-    event_status(devClient, payload, devShadow, shadow, sensor)
+        payload['mssg'] = 'LED toggled'
+        shadow['last_event'] = 'LED toggled'
+        led_switch_state = get_switch_state(sensor)
+
+        if led_switch_state == 1:
+            led_main.on()
+            shadow['LED_main'] = 'on'
+        else:
+            led_main.off()
+            shadow['LED_main'] = 'off'
+
+    event_status(client, payload, dev, shadow, sensor)
 
 
 def run_tgsn():
@@ -121,15 +119,15 @@ def run_tgsn():
         # Button Press Event
         if button.is_pressed:
             btn_thread = threading.Thread(
-                target=button_press_event,
-                args=(devPayload, shadow_report))
+                target=event,
+                args=(devPayload, shadow_report, devClient, devShadow, 'button_press'))
             btn_thread.start()
             
         # Toggle LED Event
         if get_switch_state(sensor) != led_switch_state:
             tgl_thread = threading.Thread(
-                target=toggle_event,
-                args=(devPayload, shadow_report))
+                target=event,
+                args=(devPayload, shadow_report, devClient, devShadow, 'toggle'))
             tgl_thread.start()
         
         # Sleep
