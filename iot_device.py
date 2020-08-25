@@ -58,6 +58,7 @@ def get_switch_state(sensor):
 
 
 def button_press_event(payload, shadow):
+    print('button pressed!')
     led_main.off()
 
     payload['mssg'] = 'button pressed'
@@ -119,18 +120,18 @@ def run_tgsn():
 
         # Button Press Event
         if button.is_pressed:
-            threading.Thread(
+            btn_thread = threading.Thread(
                 target=button_press_event,
                 args=(devPayload, shadow_report))
+            btn_thread.start()
             
         # Toggle LED Event
         if get_switch_state(sensor) != led_switch_state:
-            threading.Thread(
+            tgl_thread = threading.Thread(
                 target=toggle_event,
-                args=(devPayload, shadow_report)
-            )
+                args=(devPayload, shadow_report))
+            tgl_thread.start()
         
-        #print(sensor.value)
         # Sleep
         sleep(0.1)
 
