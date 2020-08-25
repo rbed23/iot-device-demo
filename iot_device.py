@@ -122,12 +122,16 @@ def run_tgsn():
                 target=event,
                 args=(devPayload, shadow_report, devClient, devShadow, 'button_press'))
             btn_thread.start()
+            sleep(0.1)
             
         # Toggle LED Event
         if get_switch_state(sensor) != led_switch_state:
             tgl_thread = threading.Thread(
                 target=event,
                 args=(devPayload, shadow_report, devClient, devShadow, 'toggle'))
+            
+            led_switch_state = get_switch_state(sensor)
+            
             tgl_thread.start()
         
         # Sleep
