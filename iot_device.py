@@ -93,6 +93,8 @@ def run_tgsn():
 
             sleep(0.5)
             led_main.on()
+            shadow_report['LED_main'] = 'on'
+            event_status(devClient, devPayload, devShadow, shadow_report, sensor)
 
         # Toggle LED Event
         if get_switch_state(sensor) != led_switch_state:
