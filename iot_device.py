@@ -64,6 +64,7 @@ def event(payload, shadow, client, dev, event_type):
         led_main.off()
 
         payload['mssg'] = 'button pressed'
+        payload['LED_main'] = 'off'
         shadow['last_event'] = 'button pressed'
         shadow['LED_main'] = 'off'
         event_status(client, payload, dev, shadow, sensor)
@@ -71,6 +72,7 @@ def event(payload, shadow, client, dev, event_type):
         sleep(0.5)
 
         led_main.on()
+        payload['LED_main'] = 'on'
         shadow['LED_main'] = 'on'
 
     elif event_type == 'toggle':
