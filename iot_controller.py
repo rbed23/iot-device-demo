@@ -8,6 +8,9 @@ from time import sleep
 from delta_manager import *
 
 
+myDeviceShadow = ""
+
+
 def customMssgCallback(client, userdata, message):
     print("Received a new message:")
     print(str(message.payload))
@@ -67,7 +70,7 @@ def customShadowCallback_Delete(payload, responseStatus, token):
 
 
 def delta_handler(delta_state):
-
+    global myDeviceShadow
     print('in delta handler')
     aar = {}
     for k, v in delta_state.items():
@@ -87,6 +90,7 @@ def delta_handler(delta_state):
 
 
 def iot_setup():
+    global myDeviceShadow
 
     # Get device configuration details
     with open('config.json', 'r') as cfg:
