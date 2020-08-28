@@ -12,6 +12,7 @@ myDeviceShadow = ""
 
 
 def customMssgCallback(client, userdata, message):
+    # message is a JSON string ready to be parsed using json.loads(...)
     print("Received a new message:")
     print(str(message.payload))
     print("from topic: ")
@@ -20,6 +21,7 @@ def customMssgCallback(client, userdata, message):
 
 
 def customShadowCallback(payload, responseStatus, token):
+    # payload is a JSON string ready to be parsed using json.loads(...)
     print(f'Payload: {str(payload)}')
     print(f'Status: {responseStatus}')
     print(f'Token: {token}')
@@ -28,7 +30,6 @@ def customShadowCallback(payload, responseStatus, token):
 
 def customShadowCallback_Update(payload, responseStatus, token):
     # payload is a JSON string ready to be parsed using json.loads(...)
-    # in both Py2.x and Py3.x
     if responseStatus == "timeout":
         print("Update request " + token + " time out!")
     if responseStatus == "accepted":
@@ -47,7 +48,6 @@ def customShadowCallback_Update(payload, responseStatus, token):
 
 def customShadowCallback_Delta(payload, responseStatus, token):
     # payload is a JSON string ready to be parsed using json.loads(...)
-    # in both Py2.x and Py3.x
     payloadDict = json.loads(payload)
     print("++++++++DELTA++++++++++")
     print(json.dumps(payloadDict, indent=2))
@@ -59,6 +59,7 @@ def customShadowCallback_Delta(payload, responseStatus, token):
 
 
 def customShadowCallback_Delete(payload, responseStatus, token):
+    # payload is a JSON string ready to be parsed using json.loads(...)
     if responseStatus == "timeout":
         print("Delete request " + token + " time out!")
     if responseStatus == "accepted":
@@ -70,9 +71,19 @@ def customShadowCallback_Delete(payload, responseStatus, token):
 
 
 def delta_handler(delta_state):
+    '''
+    Handles desired changes to the IoT device operating variables
+
+    :desc delta_state: instructs device to update it's state
+    :type delta_state: dict
+    '''
+
+    # Allows updates to a devices reported state
     global myDeviceShadow
-    print('in delta handler')
+
     aar = {}
+
+    # Manage delta actions
     for k, v in delta_state.items():
         if k == 'LED_main':
             if v == 'on' or v == 'off':
@@ -90,6 +101,7 @@ def delta_handler(delta_state):
 
 
 def iot_setup():
+    # imports variable to be configured and used in delta_handler f(x)
     global myDeviceShadow
 
     # Get device configuration details
@@ -152,6 +164,7 @@ def iot_setup():
     shadow_doc['state']['reported']['property'] = 0
     shadow_doc['state']['reported']['state'] = 'initialized'
     shadow_doc['state']['reported']['time'] = f'{datetime.now()}'
+    
     myDeviceShadow.shadowUpdate(
         json.dumps(shadow_doc),
         customShadowCallback_Update, 5)

@@ -39,6 +39,13 @@ def event_status(client, payload, shadow, report, sensor, event_type=""):
 
 
 def format_shadow_report(report):
+    '''
+    Create shadow state report doc, ready for shadow update
+
+    :desc report: device state to be reported
+    :type report: dict
+    '''
+
     tmp = {
         'state': {
             'reported': report
@@ -48,16 +55,31 @@ def format_shadow_report(report):
 
 
 def get_switch_state(sensor):
-    # Button == 0 if pressed
-    # Switch == 0 if 'off'
+    # If sensor object is of type 'Button'
+    # Button == 0 if pressed, else returns 1
 
-    # Return True if powered
-    # else return False
+    # If sensor object is of type 'LightSensor'
+    # Switch == 0 if 'off', else returns 1
+
+    # If Button:
+        # Return True if powered
+        # else return False
     #return not sensor.value
+    
+    # If LightSensor:
+        # Return 1 if powered
+        # else return 0
     return round(sensor.value)
 
 
 def event(payload, shadow, client, dev, event_type):
+    '''
+    Manages event actions for a device
+
+    :desc event_type: expresses the specific event requiring action
+    :type event_type: str
+    '''
+
     if event_type == 'button_press':
         print('button pressed!')
 
